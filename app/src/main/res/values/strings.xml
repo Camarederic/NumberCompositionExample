@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">NumberCompositionExample</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_description">Brain</string>
+
+    <string name="game_description">
+
+         Правила игры: перед вами будет три фигуры, две снизу и одна сверху, в двух из них будут числа. Необходимо, чтобы сумма чисел из двух нижних фигур была равна числу в верхней фигуре, для этого нужно вставить недостающее число.
+
+        \n\n Пример: в верхнем круге число 7, в одном из нижних знак вопроса, а в другом число 4. Значит на месте вопросительного знака должно быть число 3, потому что 3 + 4 = 7
+    </string>
 </resources>

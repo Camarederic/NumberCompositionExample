@@ -9,6 +9,6 @@ class GetGameSettingsUseCase(private val repository: GameRepository) {
 
     // 14) Создаем метод
     operator fun invoke(level: Level): GameSettings{
-        return repository.getGameSettings()
+        return repository.getGameSettings(level)
     }
 }
