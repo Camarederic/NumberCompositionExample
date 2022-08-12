@@ -32,8 +32,17 @@ class WelcomeFragment : Fragment() {  // вот такой подход прин
         super.onViewCreated(view, savedInstanceState)
         // 25) Создаем клик слушателя для кнопки
         binding.buttonUnderstand.setOnClickListener {
-
+            // 40) Вызываем метод
+            launchChooseLevelFragment()
         }
+    }
+
+    // 38) Создаем метод для запуска ChooseLevelFragment
+    private fun launchChooseLevelFragment(){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContainer, ChooseLevelFragment.newInstance())
+            .addToBackStack(ChooseLevelFragment.NAME) // 57) Меняем null на ChooseLevelFragment.NAME
+            .commit()
     }
 
     // 27) Создаем метод onDestroy

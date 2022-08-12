@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.numbercompositionexample.R
 import com.example.numbercompositionexample.databinding.FragmentChooseLevelBinding
+import com.example.numbercompositionexample.domain.entity.Level
 import java.lang.RuntimeException
 
 // 20) Создаем фрагмент
@@ -32,23 +33,44 @@ class ChooseLevelFragment : Fragment() {
 
         // 30) Создаем клики слушателя для кнопок
         binding.buttonLevelTest.setOnClickListener {
-
+            // 48) Вызываем метод для каждой кнопки
+            launchGameFragment(Level.TEST)
         }
         binding.buttonLevelEasy.setOnClickListener {
-
+            launchGameFragment(Level.EASY)
         }
         binding.buttonLevelMiddle.setOnClickListener {
-
+            launchGameFragment(Level.NORMAL)
         }
         binding.buttonLevelHard.setOnClickListener {
-
+            launchGameFragment(Level.HARD)
         }
     }
+
 
     // 31) Создаем метод onDestroy
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    // 47) Создаем метод при нажатии на кнопку тестовый и входим в игру
+    private fun launchGameFragment(level: Level){
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.mainContainer, GameFragment.newInstance(level))
+            .addToBackStack(GameFragment.NAME)
+            .commit()
+    }
+
+    // 39) Создаем метод
+    companion object {
+
+        // 56) Создаем имя
+        const val NAME = "ChooseLevelFragment"
+
+        fun newInstance(): ChooseLevelFragment{
+            return ChooseLevelFragment()
+        }
     }
 }
 
