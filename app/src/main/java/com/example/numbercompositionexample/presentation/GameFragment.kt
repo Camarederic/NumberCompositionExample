@@ -48,7 +48,7 @@ class GameFragment : Fragment() {
                     true,
                     0,
                     0,
-                    GameSettings(0,0,0,0)
+                    GameSettings(0, 0, 0, 0)
                 ))
         }
 
@@ -63,13 +63,15 @@ class GameFragment : Fragment() {
 
     // 43) Создаем метод гду будем получать объект из аргументов
     private fun parseArgs() {
-        level = requireArguments().getSerializable(KEY_LEVEL) as Level
+        requireArguments().getParcelable<Level>(KEY_LEVEL)?.let {
+            level = it
+        }
     }
 
     // 54) Создаем метод, который будет запускать экран окончания игры
-    private fun launchGameFinishedFragment(gameResult: GameResult){
+    private fun launchGameFinishedFragment(gameResult: GameResult) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContainer,GameFinishedFragment.newInstance(gameResult))
+            .replace(R.id.mainContainer, GameFinishedFragment.newInstance(gameResult))
             .addToBackStack(null)
             .commit()
     }
@@ -86,7 +88,7 @@ class GameFragment : Fragment() {
         fun newInstance(level: Level): GameFragment {
             return GameFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(KEY_LEVEL, level)
+                    putParcelable(KEY_LEVEL, level)
                 }
             }
         }

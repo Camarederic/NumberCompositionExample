@@ -43,45 +43,51 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // 60) Добавление клика слушателя на кнопке назад
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true){
-            override fun handleOnBackPressed() {
-                retryGame()
-            }
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    retryGame()
+                }
+            })
+        // 65) Создаем клик слушателя для кнопки
+        binding.buttonGameAgain.setOnClickListener {
+            retryGame()
+        }
 
+    }
 
+    // 34) Переопределяем метод
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 
+    // 51) Создаем метод гду будем получать объект из аргументов
+    private fun parseArgs() {
+        requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
+            gameResult = it
+        }
+    }
 
-}
+    // 59) Создаем метод для повтора игры
+    private fun retryGame() {
+        requireActivity().supportFragmentManager.popBackStack(GameFragment.NAME,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
 
-// 34) Переопределяем метод
-override fun onDestroy() {
-    super.onDestroy()
-    _binding = null
-}
+    // 49) Создаем метод
+    companion object {
 
-// 51) Создаем метод гду будем получать объект из аргументов
-private fun parseArgs() {
-    gameResult = requireArguments().getSerializable(KEY_GAME_RESULT) as GameResult
-}
+        private const val KEY_GAME_RESULT = "game_result"
 
-// 59) Создаем метод для повтора игры
-private fun retryGame() {
-    requireActivity().supportFragmentManager.popBackStack(GameFragment.NAME, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-}
-
-// 49) Создаем метод
-companion object {
-
-    private const val KEY_GAME_RESULT = "game_result"
-
-    fun newInstance(gameResult: GameResult): GameFinishedFragment {
-        return GameFinishedFragment().apply {
-            arguments = Bundle().apply {
-                putSerializable(KEY_GAME_RESULT, gameResult)
+        fun newInstance(gameResult: GameResult): GameFinishedFragment {
+            return GameFinishedFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(KEY_GAME_RESULT,
+                        gameResult) // 62) putSerializable меняем putParcelable
+                }
             }
         }
     }
-}
 
 }
