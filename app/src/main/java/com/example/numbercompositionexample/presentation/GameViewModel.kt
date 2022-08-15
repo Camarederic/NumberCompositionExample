@@ -87,6 +87,8 @@ class GameViewModel(application: Application) :
         startTimer()
         // 89) Вызываем метод
         generateQuestion()
+        // 132) Вызываем метод
+        updateProgress()
     }
 
     // 109) Создаем метод для настроек игры
@@ -132,6 +134,11 @@ class GameViewModel(application: Application) :
 
     // 98) Создаем метод для вычисления правильных ответов в процентах
     private fun calculatePercentOfRightAnswers(): Int {
+        // 133) Проверяем на ноль
+        if (countOfQuestions == 0){
+            return 0
+            // 134) В манифесте добавляем строчку для портретного режима
+        }
         return ((countOfRightAnswers / countOfQuestions.toDouble()) * 100).toInt()
     }
 
